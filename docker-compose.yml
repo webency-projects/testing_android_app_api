@@ -1,0 +1,12 @@
+name: "android api"
+
+services:
+  api:
+    container_name: test_api
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: uvicorn main:app --host 0.0.0.0 --port 5000
+    restart: on-failure
+    ports:
+      - "5000:5000"
