@@ -19,8 +19,6 @@ jobs:
           port: ${{ secrets.PORT }}
           command: |
               cd ~/automatics
-              eval `ssh-agent -s`
-              ssh-add ~/.ssh/github_rsa
               git pull
               sudo docker compose up -d --build
               
