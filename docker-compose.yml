@@ -6,7 +6,37 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    command: uvicorn main:app --host 0.0.0.0 --port 5000
+    command: alembic upgrade head & uvicorn main:app --host 0.0.0.0 --port 5000
     restart: on-failure
+    environment:
+      - PG_DB_USER=postgres
+      - PG_DB_PASSWORD=postgres
+      - PG_DB_HOST=postgres_db
+      - PG_DB_NAME=project_db
     ports:
       - "5000:5000"
+    networks:
+      - project-network
+
+  postgres_db:
+    container_name: postgres_db
+    image: postgres:16
+    restart: on-failure
+    ports:
+      - "5432"
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=project_db
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+    networks:
+      - project-network
+
+
+volumes:
+  pg_data:
+
+networks:
+  project-network:
+    driver: bridge
