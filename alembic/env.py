@@ -8,9 +8,9 @@ from sqlalchemy.ext.asyncio import async_engine_from_config
 from alembic import context
 from app.core.config import settings
 from app.core.database import Base
-# from app.domain.device import model
-# from app.domain.user import model
-# from app.domain.notification import model
+from app.domain.user.model import Account
+from app.domain.device.model import Device
+from app.domain.notification.model import SmsNotification, PushNotification
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
